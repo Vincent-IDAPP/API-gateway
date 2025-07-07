@@ -1,0 +1,38 @@
+services:
+  auth_service:
+    build:
+      context: ./auth-service
+      dockerfile: Dockerfile.dev
+    container_name: auth_service
+    ports:
+      - "5001"
+    environment:
+      - PORT=5001
+      - MONGO_URI=mongodb://mongo:27017/mydb
+      - JWT_SECRET=supersecretkey
+    depends_on:
+      - mongo
+
+  api_gateway:
+    build:
+      context: ./api-gateway  # 🔁 Corrigé ici aussi : auth-gateway → api-gateway
+      dockerfile: Dockerfile.dev
+    container_name: api-gateway
+    ports:
+      - "3000:3000"
+    environment:
+      - GATEWAY_PORT=3000
+    depends_on:
+      - auth_service
+
+  mongo:
+    image: mongo:6.0
+    container_name: mongo
+    restart: unless-stopped
+    volumes:
+      - mongo_data:/data/db
+    ports:
+      - "27017:27017"
+
+volumes:
+  mongo_data:
