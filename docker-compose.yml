@@ -2,7 +2,7 @@ services:
   auth_service:
     build:
       context: ./auth-service
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile
     container_name: auth_service
     ports:
       - "5001"
@@ -15,13 +15,16 @@ services:
 
   api_gateway:
     build:
-      context: ./api-gateway  # 🔁 Corrigé ici aussi : auth-gateway → api-gateway
-      dockerfile: Dockerfile.dev
+      context: ./api-gateway
+      dockerfile: Dockerfile
     container_name: api-gateway
     ports:
       - "3000:3000"
     environment:
       - GATEWAY_PORT=3000
+    volumes:
+      - ./api-gateway:/app
+      - /app/node_modules
     depends_on:
       - auth_service
 

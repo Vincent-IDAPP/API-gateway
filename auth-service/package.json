@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "nodemon server.js"
   },
   "dependencies": {
     "bcrypt": "^5.1.0",
@@ -13,5 +13,8 @@
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.0.0",
     "mongoose-unique-validator": "^4.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
   }
 }
